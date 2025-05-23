@@ -3,13 +3,12 @@ import shared_data
 
 # Ailment-to-doctor fixed mapping
 doctors = {
-    "Fever": "Dr. Sharma",
-    "Cold": "Dr. Mehta",
-    "Headache": "Dr. Verma",
-    "Diabetes": "Dr. Rao",
-    "Hypertension": "Dr. Roy",
-    "Chest Pain": "Dr. Menon",
-    "Fatigue": "Dr. Kulkarni"
+    "Issue with Urine": "Dr. Anagha Kulkarni",
+    "Kidney related Issue": "Dr. Anagha Kulkarni",
+    "Shoulder injury/pain": "Dr. Aashay Kekatpure",
+    "Elbow injury/pain": "Dr. Aashay Kekatpure",
+    "Knee injury/pain": "Dr. Aashay Kekatpure",
+    "Other": "(Kindly consult directly to the doctor)"
 }
 
 ailments_list = list(doctors.keys())

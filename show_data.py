@@ -10,8 +10,8 @@ root.title("Summary")
 root.attributes('-fullscreen', True)
 root.configure(bg=shared_data.BG_COLOR)
 
-title = tk.Label(root, text="Patient Summary", font=("Arial", 28), bg=shared_data.BG_COLOR)
-title.pack(pady=30)
+title = tk.Label(root, text="Patient Summary", font=("Arial", 20), bg=shared_data.BG_COLOR)
+title.pack(pady=25)
 
 info = f"""
 Language: {shared_data.selected_language}
@@ -29,11 +29,11 @@ info += ", ".join(shared_data.selected_ailments)
 
 info += f"\n\n--- Suggested Doctor ---\n{shared_data.assigned_doctor}"
 
-lbl_info = tk.Label(root, text=info, font=("Arial", 20), justify="left", bg=shared_data.BG_COLOR)
-lbl_info.pack(padx=50, pady=20)
+lbl_info = tk.Label(root, text=info, font=("Arial", 16), justify="left", bg=shared_data.BG_COLOR)
+lbl_info.pack(padx=50, pady=5)
 
-btn = tk.Button(root, text="Continue", font=("Arial", 22), command=proceed_to_chatbot)
-btn.pack(pady=30)
+btn = tk.Button(root, text="Continue", font=("Arial", 14), command=proceed_to_chatbot)
+btn.pack(pady=15)
 
 def exit_fullscreen(event):
     root.attributes('-fullscreen', False)
