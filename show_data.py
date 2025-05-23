@@ -2,8 +2,8 @@ import tkinter as tk
 import shared_data
 
 def proceed_to_chatbot():
-    root.destroy()
-    import medical_assistant_chat  # Step 5
+    import send_text
+    root.destroy()	# Step 5
 
 root = tk.Tk()
 root.title("Summary")

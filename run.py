@@ -1,1 +1,1 @@
-import language_selection.py
+import language_selection
