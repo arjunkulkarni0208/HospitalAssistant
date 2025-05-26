@@ -1,61 +1,43 @@
 import tkinter as tk
+from tkinter import messagebox
 import shared_data
-import time
 
-# Mock sensor data
-mock_data = {
-    "Weight": "65 kg",
-    "Blood Pressure": "120/80 mmHg",
-    "Pulse": "76 bpm",
-    "SpO2": "98%"
-}
+def next_screen():
+    shared_data.bp = bp_entry.get()
+    shared_data.weight = weight_entry.get()
+    shared_data.oxygen = oxygen_entry.get()
 
-test_order = list(mock_data.keys())
-current_test = 0
-
-def next_test():
-    global current_test
-    if current_test >= len(test_order):
-        root.destroy()
-        import ailment_selection  # Step 4 (to be created)
+    if not (shared_data.bp and shared_data.weight and shared_data.oxygen):
+        messagebox.showwarning("Input Error", "Please enter all values.")
         return
 
-    test = test_order[current_test]
-    
-    result = mock_data[test]
-    shared_data.health_tests[test] = result
+    root.destroy()
+    import ailment_selection
 
-    lbl_instruction.config(text=f"{test} Test...")
-    lbl_result.config(text=f"{result}")
-
-    current_test += 1
-
-    # Auto advance after 2 seconds
-    root.after(2000, next_test)
-
-# GUI Setup
 root = tk.Tk()
-root.title("Health Check")
+root.title("Health Tests")
 root.attributes('-fullscreen', True)
 root.configure(bg=shared_data.BG_COLOR)
 
-lbl_title = tk.Label(root, text="Health Tests" if shared_data.selected_language == "English" else "स्वास्थ्य परीक्षण",
-                     font=("Arial", 32), bg=shared_data.BG_COLOR)
-lbl_title.pack(pady=40)
+title_label = tk.Label(root, text="Enter Health Test Readings", font=("Arial", 24), bg=shared_data.BG_COLOR)
+title_label.pack(pady=30)
 
-lbl_instruction = tk.Label(root, text="", font=("Arial", 28), bg=shared_data.BG_COLOR)
-lbl_instruction.pack(pady=20)
+bp_label = tk.Label(root, text="Blood Pressure (e.g., 120/80):", font=("Arial", 18), bg=shared_data.BG_COLOR)
+bp_label.pack(pady=10)
+bp_entry = tk.Entry(root, font=("Arial", 18))
+bp_entry.pack(pady=5)
 
-lbl_result = tk.Label(root, text="", font=("Arial", 26), fg="green", bg=shared_data.BG_COLOR)
-lbl_result.pack(pady=20)
+weight_label = tk.Label(root, text="Weight (kg):", font=("Arial", 18), bg=shared_data.BG_COLOR)
+weight_label.pack(pady=10)
+weight_entry = tk.Entry(root, font=("Arial", 18))
+weight_entry.pack(pady=5)
 
-# Start the first test after a short delay
-root.after(1000, next_test)
+oxygen_label = tk.Label(root, text="Oxygen Level (%):", font=("Arial", 18), bg=shared_data.BG_COLOR)
+oxygen_label.pack(pady=10)
+oxygen_entry = tk.Entry(root, font=("Arial", 18))
+oxygen_entry.pack(pady=5)
 
-# Escape to exit fullscreen
-def exit_fullscreen(event):
-    root.attributes('-fullscreen', False)
-
-root.bind("<Escape>", exit_fullscreen)
+submit_button = tk.Button(root, text="Next", font=("Arial", 18), command=next_screen)
+submit_button.pack(pady=30)
 
 root.mainloop()

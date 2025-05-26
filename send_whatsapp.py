@@ -1,46 +1,32 @@
-import pywhatkit
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
 import time
-import shared_data
 
-# Hardcoded numbers with country code (modify as needed)
-patient_number = "+919607379080"
-hospital_number = "+919766479480"
+# Set up Firefox browser
+driver = webdriver.Firefox()
+driver.get("https://web.whatsapp.com")
 
-def build_summary_message():
-    info = f"""
-🧾 *Patient Summary* 🏥
+# Wait for QR code scan
+input("Scan QR code and press Enter...")
 
-Language: {shared_data.selected_language}
-Name: {shared_data.patient_name}
-Age: {shared_data.patient_age}
-Phone: {shared_data.patient_phone}
+# Search for the contact
+contact = "+919607379080"  # or phone number with country code
+message = "Hello from Hospital Assistant!"
 
---- Health Test Results ---
-"""
-    for key, value in shared_data.health_data.items():
-        info += f"{key}: {value}\n"
+search_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="3"]')
+search_box.click()
+search_box.send_keys(contact)
+time.sleep(2)
+search_box.send_keys(Keys.ENTER)
 
-    info += "\n--- Reported Ailments ---\n"
-    info += ", ".join(shared_data.selected_ailments)
+# Wait for chat to open
+time.sleep(2)
 
-    info += f"\n\n--- Suggested Doctor ---\n{shared_data.assigned_doctor}"
+# Type message
+msg_box = driver.find_element(By.XPATH, '//div[@contenteditable="true"][@data-tab="10"]')
+msg_box.send_keys(message)
+msg_box.send_keys(Keys.ENTER)
 
-    info += "\n\nSent via Hospital Assistant 🤖"
+print("✅ Message sent.")
 
-    return info.strip()
-
-def send_summary_via_whatsapp(number, message):
-    try:
-        print(f"📤 Sending to: {number}")
-        pywhatkit.sendwhatmsg_instantly(number, message, wait_time=10, tab_close=True)
-        print("✅ Message sent successfully!")
-    except Exception as e:
-        print(f"❌ Failed to send message to {number}: {e}")
-
-if __name__ == "__main__":
-    print("Works")
-    message = build_summary_message()
-    
-    send_summary_via_whatsapp(patient_number, message)
-    time.sleep(20)  # Delay to prevent WhatsApp from blocking second message
-    send_summary_via_whatsapp(hospital_number, message)
