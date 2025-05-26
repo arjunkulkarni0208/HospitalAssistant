@@ -1,5 +1,6 @@
 import tkinter as tk
 import shared_data
+import os
 
 # Ailment-to-doctor fixed mapping
 doctors = {
@@ -31,14 +32,19 @@ def show_doctor():
 
     lbl_doctor.config(text=f"Suggested Doctor: {shared_data.assigned_doctor}")
 
-    # Proceed to next screen after short delay
-    root.after(3000, launch_summary_screen)
+    # Proceed to appropriate next screen after short delay
+    root.after(3000, launch_next_stage)
 
-def launch_summary_screen():
+def launch_next_stage():
     root.destroy()
-    import show_data  # Newly created summary screen
+    if shared_data.assigned_doctor == "Dr. Aashay Kekatpure":
+        os.system("python3 ortho_faq.py")
+    elif shared_data.assigned_doctor == "Dr. Anagha Kulkarni":
+        os.system("python3 uro_faq.py")
+    else:
+        import show_data
 
-# UI
+# UI setup
 root = tk.Tk()
 root.title("Ailment Selection")
 root.attributes('-fullscreen', True)
@@ -74,3 +80,4 @@ def exit_fullscreen(event):
 root.bind("<Escape>", exit_fullscreen)
 
 root.mainloop()
+

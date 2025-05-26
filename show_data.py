@@ -25,7 +25,7 @@ def show_wait_screen():
 
   # import run  # Step 5: move to chatbot
 
-def proceed_to_chatbot_and_send_text():
+def send_text():
     show_wait_screen()
     root.destroy()
 
@@ -56,7 +56,7 @@ info += f"\n\n--- Suggested Doctor ---\n{shared_data.assigned_doctor}"
 lbl_info = tk.Label(root, text=info, font=("Arial", 16), justify="left", bg=shared_data.BG_COLOR)
 lbl_info.pack(padx=50, pady=5)
 
-btn = tk.Button(root, text="Continue", font=("Arial", 14), command=proceed_to_chatbot_and_send_text)
+btn = tk.Button(root, text="Continue", font=("Arial", 14), command=send_text)
 btn.pack(pady=15)
 
 def exit_fullscreen(event):
